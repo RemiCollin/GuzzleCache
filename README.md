@@ -30,8 +30,10 @@ app('guzzlecache')->client();
 
 ```
 
-To get an instances the cache-enabled GuzzleHttp\Client object. 
-
-Then just use Guzzle the usual way.
+To get an instances the cache-enabled GuzzleHttp\Client object. Then just use Guzzle the usual way.
 
 Have fun!
+
+##License
+
+MIT
