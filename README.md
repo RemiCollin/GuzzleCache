@@ -68,7 +68,7 @@ You can specify an optionnal lifetime when requesting a Guzzle client, that will
 ```php
 
 // Store all the request made with $client for 15 minutes
-$client = app('guzzlecache')->client(['base_url' => 'http://httpbin.org'], 15); 
+$client = GuzzleCache::client(['base_url' => 'http://httpbin.org'], 15); 
 
 ```
 
