@@ -2,13 +2,13 @@
 
 use Illuminate\Support\Facades\Facade;
 
-class Guzzle extends Facade
+class GuzzleCache extends Facade
 {
 
     protected static function getFacadeAccessor()
     {
 
-    	$client = \GuzzleHttp\Client;
+    	$client = app('laraguzzle');
 
         return $client;
         
