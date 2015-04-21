@@ -12,6 +12,15 @@ Grab the package with composer :
 
 ```
 
+Add these aliases to your config/app.php :
+
+```php
+
+    'Guzzle'        => 'Remic\GuzzleCache\Facades\Guzzle', 
+    'GuzzleCache'   => 'Remic\GuzzleCache\Facades\GuzzleCache',
+
+```
+
 Add this line to your config/app.php providers :
 
 ```php
@@ -28,13 +37,25 @@ Then publish the configuration file :
 ```
 
 
-##Usage
+##Usage (No Caching)
 
 From your L5 application, call: 
 
 ```php
 
-$client = app('guzzlecache')->client(['base_url' => 'http://httpbin.org']);
+$client = Guzzle::client(['base_url' => 'http://httpbin.org']);
+
+```
+
+This will return an instance of the GuzzleHttp\Client object wihtout caching. Then use Guzzle the usual way.
+
+##Usage (With Caching)
+
+From your L5 application, call: 
+
+```php
+
+$client = GuzzleCache::client(['base_url' => 'http://httpbin.org']);
 
 ```
 
@@ -47,7 +68,7 @@ You can specify an optionnal lifetime when requesting a Guzzle client, that will
 ```php
 
 // Store all the request made with $client for 15 minutes
-$client = app('guzzlecache')->client(['base_url' => 'http://httpbin.org'], 15); 
+$client = GuzzleCache::client(['base_url' => 'http://httpbin.org'], 15); 
 
 ```
 
