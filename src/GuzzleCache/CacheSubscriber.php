@@ -3,6 +3,7 @@
 use GuzzleHttp\Event\SubscriberInterface;
 use GuzzleHttp\Event\BeforeEvent;
 use GuzzleHttp\Event\CompleteEvent;
+use GuzzleHttp\Stream\Stream;
 use Illuminate\Contracts\Cache\Repository as Cache;
 
 /**
@@ -51,17 +52,19 @@ class CacheSubscriber implements SubscriberInterface
     public function onBefore(BeforeEvent $event, $name)
     {
         $request = $event->getRequest();
-        
-        if($request->getMethod() == 'GET')
-        {
-            $key = $this->getCacheKey($request->getUrl());
 
-            if($this->cache->has($key) )
+        if($request->getMethod() == 'GET' && $this->lifetime)
+        {
+            $response_key = $this->getCacheResponseKey($request->getUrl());
+            $body_key = $this->getCacheBodyKey($request->getUrl());
+
+            if($this->cache->has($response_key) && $this->cache->has($body_key))
             {
-                $response = $this->cache->get($key);
+                $response = $this->cache->get($response_key);
+                $body = $this->cache->get($body_key);
+                $response->setBody(Stream::factory($body));
                 
                 $event->intercept($response);
-              
             }
         }
     }
@@ -76,20 +79,29 @@ class CacheSubscriber implements SubscriberInterface
     public function onComplete(CompleteEvent $event, $name)
     {
         $request = $event->getRequest();
-        
-        if($request->getMethod() == 'GET')
+        $response = $event->getResponse();
+
+        if($request->getMethod() == 'GET' && $response->getStatusCode() == 200 && $this->lifetime)
         {
-            $key = $this->getCacheKey($request->getUrl());
-            
-            if(! $this->cache->has($key))
+            $response_key = $this->getCacheResponseKey($request->getUrl());
+            $body_key = $this->getCacheBodyKey($request->getUrl());
+
+            if(! $this->cache->has($response_key) || ! $this->cache->has($body_key))
             {
-                $this->cache->put($key, $event->getResponse(), $this->lifetime);
+                $body = (string) $response->getBody();
+                $this->cache->put($response_key, $response, $this->lifetime);
+                $this->cache->put($body_key, $body, $this->lifetime);
             }
         }
     }
 
-    protected function getCacheKey($url)
+    protected function getCacheResponseKey($url)
     {
         return $this->cachePrefix.$url;
+    }
+
+    protected function getCacheBodyKey($url)
+    {
+        return 'guzzle_body_'.$url;
     }
 }
