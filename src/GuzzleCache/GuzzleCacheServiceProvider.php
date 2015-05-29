@@ -1,14 +1,16 @@
-<?php namespace Remic\GuzzleCache;
+<?php
+
+namespace Remic\GuzzleCache;
 
 use Illuminate\Support\ServiceProvider;
 
 /**
  * A Laravel 5's package template.
  */
-class GuzzleCacheServiceProvider extends ServiceProvider {
-
+class GuzzleCacheServiceProvider extends ServiceProvider
+{
     /**
-     * This will be used to register config & view in 
+     * This will be used to register config & view in
      * your package namespace.
      *
      * --> Replace with your package name <--
@@ -17,23 +19,25 @@ class GuzzleCacheServiceProvider extends ServiceProvider {
 
     /**
      * Bootstrap the application services.
-     *
-     * @return void
      */
     public function boot()
-    {           
-        $this->app->bindShared('Remic\GuzzleCache\Factory',function ($app) {
+    {
+        // Check is performed as this function doesn't exist in Lumen
+        if (function_exists('config_path')) {
+            $configPath = __DIR__.'/../config/config.php';
+
+            $this->publishes([$configPath => config_path($this->packageName.'.php')], 'config');
+        }
+
+        $this->app->bindShared('Remic\GuzzleCache\Factory', function ($app) {
             $lifetime = config('guzzlecache.lifetime');
             $customStore = config('guzzlecache.custom_store');
             $cachePrefix = config('guzzlecache.cache_prefix');
 
-            if(is_null($customStore) || $customStore == '')
-            {
+            if (is_null($customStore) || $customStore == '') {
                 // use the default cache store
                 return new Factory($app['cache']->store(), $lifetime, $cachePrefix);
-            }
-            else
-            {
+            } else {
                 // use custom store
                 return new Factory($app['cache']->store($customStore), $lifetime, $cachePrefix);
             }
@@ -46,15 +50,10 @@ class GuzzleCacheServiceProvider extends ServiceProvider {
 
     /**
      * Register the application services.
-     *
-     * @return void
      */
     public function register()
     {
-        $this->publishes([
-            __DIR__.'/../config/config.php' => config_path($this->packageName.'.php'),
-        ]);
-
+        $configPath = __DIR__.'/../config/config.php';
+        $this->mergeConfigFrom($configPath, $this->packageName);
     }
-
 }
