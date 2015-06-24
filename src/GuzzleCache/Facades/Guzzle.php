@@ -1,4 +1,4 @@
-<?php namespace RemiCollin\GuzzleCache\Facades;
+<?php namespace Remic\GuzzleCache\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
