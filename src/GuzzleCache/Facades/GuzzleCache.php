@@ -8,7 +8,7 @@ class GuzzleCache extends Facade
     protected static function getFacadeAccessor()
     {
 
-    	$client = app('laraguzzle');
+    	$client = app('guzzlecache');
 
         return $client;
         
