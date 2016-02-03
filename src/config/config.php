@@ -8,7 +8,7 @@
     | will use default if set to '' or null
     |
     */
-    'custom_store' => '',
+    'store' => '',
 
     /*
     |--------------------------------------------------------------------------
@@ -28,6 +28,6 @@
     | you can customize here.
     |
     */
-    'cache_prefix' => 'guzzle_cache_',
+    'prefix' => 'guzzlecache_',
 
 ];

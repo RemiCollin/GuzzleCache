@@ -60,6 +60,16 @@ If you wish to use the GuzzleCache facade, first make sure `$app->withFacades();
 
 ```
 
+In Lumen, the configuration is handled via the .env file at the root of the project. Here are the default values used by GuzzleCache. If you wish to modify these, just copy and paste these to your .env file :
+
+```
+
+GUZZLECACHE_LIFETIME=60
+GUZZLECACHE_STORE=
+GUZZLECACHE_PREFIX=guzzlecache_
+
+```
+
 ##Usage
 
 From your L5 application, call: 

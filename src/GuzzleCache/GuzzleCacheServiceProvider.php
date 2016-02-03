@@ -33,8 +33,8 @@ class GuzzleCacheServiceProvider extends ServiceProvider
         $this->app->singleton('Remic\GuzzleCache\Factory', function ($app) {
 
             $lifetime = config('guzzlecache.lifetime');
-            $customStore = config('guzzlecache.custom_store');
-            $cachePrefix = config('guzzlecache.cache_prefix');
+            $customStore = config('guzzlecache.store');
+            $cachePrefix = config('guzzlecache.prefix');
 
             if (is_null($customStore) || $customStore == '') {
                 // use the default cache store
@@ -58,6 +58,6 @@ class GuzzleCacheServiceProvider extends ServiceProvider
         $configPath = __DIR__.'/../config/config.php';
 
         $this->mergeConfigFrom($configPath, $this->packageName);
-        
+
     }
 }
