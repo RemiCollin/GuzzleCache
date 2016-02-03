@@ -8,7 +8,7 @@ Grab the package with composer :
 
 ```
 
-    composer require remic/guzzlecache:0.1.*
+    composer require remic/guzzlecache:~0.2
 
 ```
 
