@@ -12,23 +12,29 @@ Grab the package with composer :
 
 ```
 
-Add these aliases to your config/app.php :
+##Configuration
+
+The GuzzleCache package works both with Laravel 5 and Lumen, but the configuration process is different. 
+
+###Laravel
+
+In Laravel, you need to register the packages service provider into your config/app.php configuration file :
 
 ```php
 
-    'Guzzle'        => 'Remic\GuzzleCache\Facades\Guzzle', 
-    'GuzzleCache'   => 'Remic\GuzzleCache\Facades\GuzzleCache',
+    Remic\GuzzleCache\GuzzleCacheServiceProvider::class, 
 
 ```
 
-Add this line to your config/app.php providers :
+If you're using facades, add this line to the corresponding section in config/app.php :
 
 ```php
 
-    'Remic\GuzzleCache\GuzzleCacheServiceProvider', 
+    'GuzzleCache'   => Remic\GuzzleCache\Facades\GuzzleCache::class,
 
 ```
-Then publish the configuration file :
+
+GuzzleCache come shipped with a default configuration file, if you wish to override these defaults, you have to publish the configuration file :
 
 ```
 
@@ -36,26 +42,35 @@ Then publish the configuration file :
     
 ```
 
+###Lumen
 
-##Usage (No Caching)
-
-From your L5 application, call: 
+In Lumen, you need to register the package's service provider into the bootstrap/app.php file :
 
 ```php
 
-$client = Guzzle::client(['base_url' => 'http://httpbin.org']);
+    $app->register(Remic\GuzzleCache\GuzzleCacheServiceProvider::class);
 
 ```
 
-This will return an instance of the GuzzleHttp\Client object wihtout caching. Then use Guzzle the usual way.
+If you wish to use the GuzzleCache facade, first make sure `$app->withFacades();` is uncommented in `bootstrap/app.php`, then add the following class alias :
 
-##Usage (With Caching)
+```php
+
+    class_alias(Remic\GuzzleCache\Facades\GuzzleCache::class,, 'GuzzleCache');
+
+```
+
+##Usage
 
 From your L5 application, call: 
 
 ```php
 
 $client = GuzzleCache::client(['base_url' => 'http://httpbin.org']);
+
+$res = $client->request('GET', '/');
+
+echo $res->getStatusCode();
 
 ```
 

@@ -1,7 +1,7 @@
 {
     "name": "remic/guzzlecache",
     "description": "Laravel 5 package for caching Guzzle's GET requests.",
-    "keywords": ["laravel5","l5","cache","guzzle","http","api","proxy"],
+    "keywords": ["laravel5","lumen","cache","guzzle","http","api","proxy"],
     "authors": [
         {
             "name": "Rémi Collin",
@@ -9,6 +9,7 @@
         }
     ],
     "require": {
+        "php": ">=5.5",
         "illuminate/support": "~5.0",
         "guzzlehttp/guzzle": "~5.0"
     },
@@ -21,5 +22,4 @@
         }
     },
     "license": "MIT"
-    
 }

@@ -7,11 +7,7 @@ class GuzzleCache extends Facade
 
     protected static function getFacadeAccessor()
     {
-
-    	$client = app('guzzlecache');
-
-        return $client;
-        
+    	return 'guzzlecache';
     }
 
 }

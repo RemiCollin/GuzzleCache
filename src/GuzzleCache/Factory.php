@@ -1,4 +1,6 @@
-<?php namespace Remic\GuzzleCache;
+<?php 
+
+namespace Remic\GuzzleCache;
 
 use Illuminate\Contracts\Cache\Repository as Cache;
 use GuzzleHttp\Message\Response;
@@ -7,11 +9,17 @@ use GuzzleHttp\Client;
 
 class Factory {
 
+    /**
+     * Cache instance
+     * 
+     * @var \Illuminate\Contracts\Cache\Repository
+     */
     protected $cache;
 
     /**
      * Default lifetime 
-     * @var [type]
+     * 
+     * @var string
      */
     protected $lifetime;
 
@@ -50,6 +58,5 @@ class Factory {
         
         return $client;
     }
-
 
 }

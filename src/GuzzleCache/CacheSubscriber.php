@@ -1,4 +1,6 @@
-<?php namespace Remic\GuzzleCache;
+<?php 
+
+namespace Remic\GuzzleCache;
 
 use GuzzleHttp\Event\SubscriberInterface;
 use GuzzleHttp\Event\BeforeEvent;
