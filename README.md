@@ -56,7 +56,7 @@ If you wish to use the GuzzleCache facade, first make sure `$app->withFacades();
 
 ```php
 
-    class_alias(Remic\GuzzleCache\Facades\GuzzleCache::class,, 'GuzzleCache');
+    class_alias(Remic\GuzzleCache\Facades\GuzzleCache::class, 'GuzzleCache');
 
 ```
 
@@ -78,13 +78,13 @@ From your L5 application, call:
 
 $client = GuzzleCache::client(['base_url' => 'http://httpbin.org']);
 
-$res = $client->request('GET', '/');
+$res = $client->get('/');
 
 echo $res->getStatusCode();
 
 ```
 
-This will return an instances of the cache-enabled GuzzleHttp\Client object. Then use Guzzle the usual way.
+Here, the $client object is an instance of Guzzle client. You can refer to [Guzzle Documentation](http://docs.guzzlephp.org/en/latest/) for more details.
 
 ###Specifying a custom lifetime
 
