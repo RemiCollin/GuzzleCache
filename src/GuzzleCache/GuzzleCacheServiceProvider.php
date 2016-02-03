@@ -29,7 +29,8 @@ class GuzzleCacheServiceProvider extends ServiceProvider
             $this->publishes([$configPath => config_path($this->packageName.'.php')], 'config');
         }
 
-        $this->app->bindShared('Remic\GuzzleCache\Factory', function ($app) {
+        $this->app->singleton('Remic\GuzzleCache\Factory', function ($app) {
+            
             $lifetime = config('guzzlecache.lifetime');
             $customStore = config('guzzlecache.custom_store');
             $cachePrefix = config('guzzlecache.cache_prefix');
